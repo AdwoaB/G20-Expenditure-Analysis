@@ -1,0 +1,195 @@
+<style>
+    /* Add a black background color to the top navigation */
+
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Spending</title>
+
+  <!-- Navigation bar -->
+  <div class="topnav">
+    <a class="active" href="index.html">Home</a>
+     <!-- Bootstrap CSS-->
+     <link href="../bootstrap.css" rel="stylesheet">
+    
+  </div>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(plotChart);
+      google.charts.load('current', {
+        'packages':['geochart'],
+        'mapsApiKey': 'AIzaSyBzKYmeMFpzWkMk3RMPIZPekeFLME1AIEY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+    function plotChart() {
+        drawChart('GDP (current $)', 'SELECT A,B,D,F,H,I,K,M,O',   //Education spending to country's GDP
+                           eduResponseHandler);
+        drawChart('EduGDPPerCapita', 'SELECT A,B,J, D,L',   //Per person education to per person GDP
+                           percapEduResponseHandler);
+        drawChart('education (fixed)', 'SELECT A,B,C,D,E,F,G,H',   //Fastest growing country in education (fixed)
+                            FixedEduResponseHandler);
+        drawChart('education (fixed)', 'SELECT A,J,K,L,M,N,O,P',  //Fastest growing country in education (percentage)
+                            CentEduResponseHandler);
+
+
+         } //plotChart
+
+
+         function drawChart(sheetName, query, responseHandler) {
+             var queryString = encodeURIComponent(query);
+             var query = new google.visualization.Query(
+                "https://docs.google.com/spreadsheets/d/1RmF94naeePJNaAvLK7aFJ_ZHF11oUbSu/gviz/tq?sheet=" + sheetName + "&headers=1&tq=" + queryString
+             );
+
+             query.send(responseHandler);
+         } //SheetName
+
+         
+         function eduResponseHandler(response) {
+            var data = response.getDataTable();
+            // data.sort({column: 2, desc:true});
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#e7711c', '#4374e0']}, 
+                title: "Education spending to country's GDP",
+                vAxis : {title: 'Spending in Trillions ($)'},
+                hAxis: {title: 'Country'}
+            };
+
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("edu_spending_div"));
+            
+            chart.draw(data, options);
+         }   //eduResponseHandler
+
+
+         function percapEduResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#e7711c', '#4374e0']}, 
+                title: "Per Capita education expenditure"
+            };
+
+            var chart = new google.visualization.ScatterChart(
+                document.getElementById("percap_edu_spending_div"));
+            
+            chart.draw(data, options);
+         }   //percapEduResponseHandler
+
+         
+         function FixedEduResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#e7711c', '#4374e0']}, 
+                title: "Per Capita education expenditure"
+            };
+
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("fastest_edu_div"));
+            
+            chart.draw(data, options);
+         }   //FixedEduResponseHandler
+
+
+
+         function CentEduResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#e7711c', '#4374e0']},
+                title: "Per Capita education expenditure"
+            };
+
+            var chart = new google.visualization.PieChart(
+                document.getElementById("fastest_edu_%_div"));
+            
+            chart.draw(data, options);
+         }   //CentEduResponseHandler
+
+
+         
+      
+
+    //   var chart = new google.visualization.BubbleChart(document.getElementById('noAura'));
+
+    //   chart.draw(data, options);
+    
+  </script>
+</head>
+<body>
+
+    <div class="container marketing">
+
+        <div class="feature">
+          
+          
+          </p>
+        </div>
+
+
+      <div class="section-message-homepage__image-wrapper"  style="visibility: inherit; opacity: 1;"> 
+        <div class="section-message-homepage__content-wrapper"  style="visibility: inherit; opacity: 1; transform: translate(0px, 0px);"> 
+           <h1 class="section-message-homepage__title">G20 Education Expenditure Analysis<br>​<br>​​<br></h1> 
+           <div> 
+              <p> 
+                 <span></span><span style="font-size: 1rem; background-color: transparent;">This page draws insight into the military spending of the G20.
+                    The analysis below includes the expenditure on education, in comparison to the country's GDP, education GDP per capita
+                    compared to total GDP per capita, as well as the fastest growing country in terms of allocating funds to education.
+                    
+                    The data used for this analysis was also acquired from the World Bank's Official Website and it contains performance 
+                    indicators of the G20 from  2010 - 2016.
+                    </span><span style="font-size: 1rem; background-color: transparent;"></span></p> 
+           </div> 
+        </div> 
+      <div>
+     </div>
+    <br>
+    <br>
+    <br>
+
+
+
+    <h3>Education expenditure to country's GDP</h3>
+    <div id="edu_spending_div" style="width: 900px; height: 500px"></div>
+
+
+
+    <h3>Per person education to per person GDP</h3>
+     <div id="percap_edu_spending_div" style="width: 900px; height: 500px"></div> 
+
+     <h3>Fastest Growing Countries in Education (Fixed Values)</h3>
+     <div id="fastest_edu_div" style="width: 900px; height: 500px"></div>
+
+     <h3>Fastest Growing Countries in Education (Fixed Values)</h3>
+     <div id="fastest_edu_%_div" style="width: 900px; height: 500px"></div>
+
+    <!-- <div class="boxed2">
+        This text is enclosed in a box.
+      </div>  -->
+
+      <!-- Footer -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p> <br> <a href=""></a><a href=""></a></p>
+        
+    </footer>
+</body>    
+</html>

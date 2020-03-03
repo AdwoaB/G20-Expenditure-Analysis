@@ -1,0 +1,309 @@
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Spending</title>
+    <link href="../bootstrap.css" rel="stylesheet">
+
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+</head>
+<body>
+    <img src="images/mil_spend.jpg" alt="img", style="width: 100%; height: 300px">
+
+    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+    <a href="index.html"></a>
+
+
+
+    <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p> <br> <a href=""></a>  <a href=""></a></p>
+        <p> <br></p>
+    </footer>
+
+</body>
+</html>
+
+
+ -->
+
+
+
+
+ 
+     <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+     <!-- <script>
+         google.charts.load('current', {'packages':['corechart']});
+         google.charts.setOnLoadCallback(Sheet); -->
+ 
+<!-- //          function Sheet() {
+//              drawSheetName('Sheet1', 'SELECT B,C,D,E,F',
+//                            militarySpendingResponseHandler);
+//              drawSheetName('Sheet1', 'SELECT A,D',
+//                            topMilitarySpendingResponseHandler);
+//          } //Sheet -->
+ 
+<!-- //          function drawSheetName(sheetName, query, responseHandler) {
+//              var queryString = encodeURIComponent(query);
+//              var query = new google.visualization.Query(
+//                 "https://docs.google.com/spreadsheets/d/1qweWsermmJJRONJqIR-iyQsloOjfa758/gviz/tq?sheet=" + sheetName + "&headers=1&tq=" + queryString
+//              );
+             
+//              query.send(responseHandler);
+//          } //drawSheetName
+  -->
+<!-- //          function militarySpendingResponseHandler(response) {
+//              var data = response.getDataTable();
+//              data.sort({column: 5, desc:true});
+ 
+//              var options = {height: 400,
+//                             vAxis : {title: 'Spending in Billions ($)'},
+//                             hAxis: {title: 'Country'}};
+             
+//              var chart = new google.visualization.ColumnChart(
+//                  document.getElementById("military_spending_div"));
+             
+//              chart.draw(data, options);
+//          } //militarySpendingResponseHandler
+  -->
+<!-- //          function topMilitarySpendingResponseHandler(response) {
+//              var data = response.getDataTable();
+//              data.sort({column: 1, desc: true});
+ 
+//              var options = {
+//                  height: 400,
+//                  colorAxis : {colors: ['#e7711c', '#4374e0']}, //orange to blue
+//                  title: 'Top Countries by Military Spending 2015'
+//              };
+ 
+//              var chart = new google.visualization.GeoChart(
+//                  document.getElementById("top_military_spending_div"));
+//              chart.draw(data, options);
+//          } //topMilitarySpendingResponseHandler
+  -->
+<!-- //      </script>
+//  </head>
+//  <body>
+//      <h3>Military Spending Analysis for Top Countries</h3>
+//      <div id="military_spending_div" style="width: 900px; height: 500px"></div>
+ 
+//      <h3>Top Military Spending for 2015</h3>
+//      <div id="top_military_spending_div"style="width: 900px; height: 500px"></div>
+//  </body>
+//  </html> -->
+
+
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Health Spending</title>
+
+      <!-- Navigation bar -->
+  <div class="topnav">
+    <a class="active" href="index.html">Home </a>
+    
+     <!-- Bootstrap CSS-->
+     <link href="../bootstrap.css" rel="stylesheet">
+    
+  </div>
+
+
+ <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(plotChart);
+
+    function plotChart() {
+        drawChart('Sheet1', 'SELECT B,G,N',   //Health spending to country's GDP
+                           healthResponseHandler);
+        drawChart('GDP per capita', 'SELECT A,B,D,F,H,I,K,M,O',   //Per person health to per person GDP
+                           percapHealthResponseHandler);
+        drawChart('health (fixed)', 'SELECT A,B,C,D,E,F,G,H',   //Fastest growing country in healthcare (fixed)
+                           FixedHealthResponseHandler);
+        drawChart('health (fixed)', 'SELECT A,J,K,L,M,N,O,P',   //Fastest growing country in healthcare (percentage)
+                           CentHealthResponseHandler);
+        
+
+         }; //plotChart
+
+
+         function drawChart(sheetName, query, responseHandler) {
+             var queryString = encodeURIComponent(query);
+             var query = new google.visualization.Query(
+                "https://docs.google.com/spreadsheets/d/1RmF94naeePJNaAvLK7aFJ_ZHF11oUbSu/gviz/tq?sheet=" + sheetName + "&headers=1&tq=" + queryString
+             );
+
+             query.send(responseHandler);
+         } //SheetName
+
+         
+         function healthResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 2, desc:true});
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#6f9654', '#43459d']}, 
+                title: "Health spending to country's GDP",
+                vAxis : {title: 'Spending in Billions ($)'},
+                hAxis: {title: 'Country'}
+            };
+
+            var chart = new google.visualization.LineChart(
+                document.getElementById("health_spending_div"));
+            
+            chart.draw(data, options);
+         }   //healthResponseHandler
+
+
+         function percapHealthResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#e6693e', '#e0440e']}, 
+                title: "Per Capita health spending"
+            };
+
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("percap_health_spending_div"));
+            
+            chart.draw(data, options);
+         }   //percapHealthResponseHandler
+         
+        
+         function FixedHealthResponseHandler(response) {
+            var data = response.getDataTable();
+            data.sort({column: 7, desc:true});
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#6f9654', '#43459d']}, 
+                // title: "Fastest Growing Countries in Healthcare (Fixed values)",
+                vAxis : {title: 'Spending in ($)'},
+                hAxis: {title: 'Country'}
+            };
+
+            var chart = new google.visualization.ScatterChart(
+                document.getElementById("fastest_health_div"));
+            
+            chart.draw(data, options);
+         }   //FixedHealthResponseHandler
+
+
+
+         function CentHealthResponseHandler(response) {
+            var data = response.getDataTable();
+
+            var options = {
+                height: 400,
+                colorAxis : {colors: ['#6f9654', '#43459d']}, 
+                // title: "Fastest Growing Countries in Healthcare (%)",
+                vAxis : {title: 'Spending in ($)'},
+                hAxis: {title: 'Country'}
+            };
+
+            var chart = new google.visualization.PieChart(
+                document.getElementById("fastest_health_%_div"));
+            
+            chart.draw(data, options);
+         }   //CentHealthResponseHandler
+
+
+         
+         
+    
+  </script>
+</head>
+<body>
+
+
+    <div class="container marketing">
+
+        <div class="feature">
+          
+          
+          </p>
+        </div>
+
+
+      <div class="section-message-homepage__image-wrapper"  style="visibility: inherit; opacity: 1;"> 
+        <div class="section-message-homepage__content-wrapper"  style="visibility: inherit; opacity: 1; transform: translate(0px, 0px);"> 
+           <h1 class="section-message-homepage__title">G20 Education Expenditure Analysis<br>​<br>​​<br></h1> 
+           <div> 
+              <p> 
+                 <span></span><span style="font-size: 1rem; background-color: transparent;">This page draws insight into the military spending of the G20.
+                    The analysis below includes the expenditure on health, in comparison to the country's GDP, health GDP per capita
+                    compared to total GDP per capita, as well as the fastest growing country in terms of allocating funds to health.
+                    
+                    The data used for this analysis was also acquired from the World Bank's Official Website and it contains performance 
+                    indicators of the G20 from  2010 - 2016.
+                    </span><span style="font-size: 1rem; background-color: transparent;"></span></p> 
+           </div> 
+        </div> 
+      <div>
+     </div>
+    <br>
+    <br>
+    <br>
+
+    <h3>Health spending to country's GDP</h3>
+    <div id="health_spending_div" style="width: 900px; height: 500px; position: center;"></div>
+
+    <h3>Per person health to per person GDP</h3>
+    <div id="percap_health_spending_div"style="width: 900px; height: 500px"></div>
+
+    <h3>Fastest Growing Countries in Healthcare (Fixed Values)</h3>
+    <div id="fastest_health_div"style="width: 900px; height: 500px"></div>
+
+    <h3>Fastest Growing Countries in Healthcare (in %)</h3>
+    <div id="fastest_health_%_div"style="width: 900px; height: 500px"></div>
+
+    
+    
+</body>
+</html>
+
+
+
+<!-- Footer -->
+<footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p> <br> <a href=""></a><a href=""></a></p>
+    
+</footer>
+
+     
